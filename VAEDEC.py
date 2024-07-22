@@ -69,7 +69,7 @@ vae.compile(optimizer='adam')
 
 # Train the VAE
 start_time = time.time()
-history = vae.fit(x_train, x_train, epochs=20, batch_size=128, validation_data=(x_test, x_test))
+history = vae.fit(x_train, x_train, epochs=10, batch_size=128, validation_data=(x_test, x_test))
 training_time = time.time() - start_time
 
 # Compress and Reconstruct
@@ -77,7 +77,9 @@ z_mean, z_log_var, z = encoder.predict(x_test)
 x_test_decoded = decoder.predict(z)
 
 # Calculate Metrics
-compression_ratio = (np.prod(x_test.shape[1:]) * 32) / (latent_dim * 32)
+original_size = np.prod(x_test.shape[1:]) * 32  # Original size in bytes
+compressed_size = latent_dim * 32  # Compressed size in bytes
+compression_ratio = original_size / compressed_size
 reconstruction_error = np.mean(np.square(x_test - x_test_decoded))
 
 # Output Metrics
