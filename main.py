@@ -74,7 +74,7 @@ vae = VAEModel(encoder, decoder)
 vae.compile(optimizer=optimizers.Adam(learning_rate=0.001))  # Adjusted learning rate
 
 # Train VAE
-vae.fit(x_train, x_train, epochs=50, batch_size=128, validation_data=(x_test, x_test),
+vae.fit(x_train, x_train, epochs=2, batch_size=64, validation_data=(x_test, x_test),
         callbacks=[EarlyStopping(monitor='val_loss', patience=10)])  # Increased epochs and patience
 
 # Measure Compression Ratio
@@ -130,7 +130,7 @@ def train_step(model, inputs):
     return loss
 
 # Train DEC Model
-epochs = 20
+epochs = 2
 batch_size = 128
 for epoch in range(epochs):
     print(f"Epoch {epoch + 1}/{epochs}")
